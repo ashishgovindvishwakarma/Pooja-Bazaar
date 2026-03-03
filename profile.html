@@ -835,7 +835,7 @@
 
   <!-- Mobile Header -->
 <div class="mobile-header">
-  <img src="images/default profile image.jpg" alt="Profile" id="mobileProfileImg">
+  <img src="default profile image.jpg" alt="Profile" id="mobileProfileImg">
   <h3 id="mobileWelcomeText">Welcome, User</h3>
   <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰ Menu</button>
   <div class="mobile-menu" id="mobileMenu">
@@ -850,7 +850,7 @@
 <div class="container">
   <!-- Sidebar for desktop -->
   <div class="sidebar">
-    <img src="images/default profile image.jpg" alt="Profile" class="profile-img" id="sidebarProfileImg">
+    <img src="default profile image.jpg" alt="Profile" class="profile-img" id="sidebarProfileImg">
     <h3 id="welcomeText">Welcome, User</h3>
     <div class="menu">
       <a href="#" class="active" data-section="info">Personal Info</a>
@@ -1067,7 +1067,7 @@
   const backBtn = document.getElementById("backBtn");
   if (backBtn) {
     backBtn.addEventListener("click", () => {
-      window.location.href = "pbhome.html";
+      window.location.href = "index.html";
     });
   }
 
@@ -1764,6 +1764,5 @@ document.querySelector('[data-section="favorites"]').addEventListener("click", l
 // 📌 Also load once on page load
 document.addEventListener("DOMContentLoaded", loadWishlist);
 </script>
-
 </body>
 </html>
