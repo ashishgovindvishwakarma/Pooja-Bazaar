@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account - Pooja Bazaar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #fff5eb;
+      color: #333;
+    }
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: #600000;
+      color: #fff;
+      padding: 25px 20px;
+      text-align: center;
+    }
+    .profile-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      margin-bottom: 15px;
+    }
+    .sidebar h3 {
+      margin-bottom: 25px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .menu {
+      margin-bottom: 20px;
+    }
+    .menu a {
+      display: block;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: 0.3s;
+      text-align: left;
+    }
+    .menu a:hover, .menu a.active {
+      background: #a60000;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: 25px;
+    }
+    .main h2 {
+      margin-bottom: 20px;
+      color: #600000;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: #fffaf5;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .profile-card p {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+    .profile-card button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: #a60000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .profile-card button:hover {
+      background: #7a0000;
+    }
+
+    /* Profile Form */
+    form label {display: block; margin: 10px 0 5px; font-weight: 500;}
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      transition: 0.2s;
+      font-size: 14px;
+    }
+    form input:focus, form textarea:focus {border-color: #a60000;}
+    form button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #a60000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    form button:hover {background: #7a0000;}
+
+    .success-message {
+      background: #e6ffe6;
+      border: 1px solid #00b300;
+      color: #006600;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      display: none;
+    }
+
+    /* Mobile Menu */
+    .mobile-header {
+      display: none;
+      background: #600000;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+    }
+    .mobile-header img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+    .mobile-header h3 {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+    .mobile-menu-btn {
+      background: #a60000;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      margin-top: 10px;
+      padding: 10px;
+    }
+    .mobile-menu a {
+      padding: 10px;
+      margin: 5px 0;
+      background: #800000;
+      color: #fff;
+      border-radius: 6px;
+      text-align: center;
+      text-decoration: none;
+    }
+    .mobile-menu a.active, .mobile-menu a:hover {
+      background: #FFD700;
+      color: #600000;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .container {flex-direction: column; margin: 10px;}
+      .sidebar {display: none;} /* hide sidebar */
+      .mobile-header {display: block;} /* show mobile header */
+      .main {padding: 15px;}
+    }
+    
+    /*  back button design*/
+   #backBtn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #a60000; /* same as login/save button */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px; /* match your other buttons */
+  width: 100%;
+}
+
+#backBtn:hover {
+  background: #7a0000; /* same hover effect as other buttons */
+} 
+
+/*add to cart design */
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* ===== Favorites Section Styling ===== */
+#favorites {
+  padding: 15px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin: 15px auto;
+  max-width: 600px;
+}
+
+#favorites h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #5a0007;
+  text-align: center;
+}
+
+/* Wishlist Items */
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+.wishlist-item:hover {
+  transform: scale(1.02);
+}
+
+/* Product Image */
+.wishlist-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Product Text */
+.wishlist-item span {
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px;
+}
+
+/* Remove Button */
+.wishlist-item .remove-btn {
+  background: #5e0209;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.wishlist-item .remove-btn:hover {
+  background: #65010b;
+}
+
+/* Empty state */
+#wishlistContainer p {
+  text-align: center;
+  color: #555;
+  font-size: 16px;
+  margin: 20px 0;
+}
+   
+
+/* ===== Hover Effects for Wishlist & Cart Items ===== */
+.wishlist-item,
+.cart-item {
+  border: 1px solid #e5e5e5;
+  transition: all 0.3s ease;
+}
+
+.wishlist-item:hover,
+.cart-item:hover {
+  border-color: #c21807; /* matches your theme */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+/* ===== Cart Section ===== */
+#cart {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+#cart h2 {
+  grid-column: 1 / -1;
+  font-size: 22px;
+  color: #65040d;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* ===== Cart Items Section ===== */
+#cartItems {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-right: 10px;
+}
+
+.cart-item .details {
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+}
+
+.cart-item .price {
+  font-weight: bold;
+  color: #222;
+  margin: 0 10px;
+}
+
+.cart-item .quantity {
+  display: flex;
+  align-items: center;
+}
+
+.cart-item .quantity button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #40060a;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 5px;
+  transition: background 0.3s;
+}
+
+.cart-item .quantity button:hover {
+  background: #59050d;
+}
+
+/* ===== Cart Summary Section ===== */
+.cart-summary {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.cart-summary h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #444;
+  text-align: center;
+}
+
+.cart-summary .row {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.cart-summary .total {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+  margin-top: 10px;
+}
+
+.cart-summary button {
+  width: 100%;
+  background: #5d0d14;
+  color: #fff;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.cart-summary button:hover {
+  background: #56070f;
+}
+
+/* ===== Orders Section ===== */
+#orders {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+#orders h2 {
+  font-size: 22px;
+  color: #65040d;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.order-item {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.order-id {
+  font-weight: bold;
+  color: #65040d;
+}
+
+.order-date {
+  color: #777;
+  font-size: 14px;
+}
+
+.order-status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-processing {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-shipped {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-delivered {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.order-products {
+  margin-top: 15px;
+}
+
+.order-product {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.order-product img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.order-product-details {
+  flex: 1;
+}
+
+.order-product-name {
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.order-product-price {
+  color: #65040d;
+  font-weight: bold;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  font-weight: bold;
+}
+
+.order-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.order-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn-reorder {
+  background: #65040d;
+  color: white;
+}
+
+.btn-reorder:hover {
+  background: #5a030a;
+}
+
+.btn-view-details {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.btn-view-details:hover {
+  background: #e9ecef;
+}
+
+.btn-cancel-order {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-cancel-order:hover {
+  background: #c82333;
+}
+
+.btn-track-order {
+  background: #28a745;
+  color: white;
+}
+
+.btn-track-order:hover {
+  background: #218838;
+}
+
+.empty-orders {
+  text-align: center;
+  padding: 30px;
+  color: #777;
+}
+
+.empty-orders i {
+  font-size: 48px;
+  margin-bottom: 15px;
+  color: #ccc;
+}
+
+/* ===== Order Tracking Modal ===== */
+.tracking-container {
+  margin: 20px 0;
+  position: relative;
+}
+
+.tracking-stage {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.tracking-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.tracking-stage.completed .tracking-icon {
+  background: #d4edda;
+  color: #155724;
+}
+
+.tracking-stage.current .tracking-icon {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.tracking-stage.pending .tracking-icon {
+  background: #f0f0f0;
+  color: #777;
+}
+
+.tracking-details {
+  flex: 1;
+}
+
+.tracking-name {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.tracking-date {
+  font-size: 12px;
+  color: #777;
+}
+
+.tracking-line {
+  position: absolute;
+  top: 30px;
+  left: 15px;
+  width: 2px;
+  height: calc(100% + 10px);
+  background: #f0f0f0;
+  z-index: 1;
+}
+
+.tracking-stage.completed .tracking-line {
+  background: #d4edda;
+}
+
+.tracking-stage.current .tracking-line {
+  background: #d1ecf1;
+  height: 15px;
+}
+
+.tracking-info {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.tracking-info h4 {
+  margin-top: 0;
+  color: #65040d;
+}
+
+.tracking-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+/* ===== Mobile Responsive ===== */
+@media(max-width: 768px) {
+  #cart {
+    grid-template-columns: 1fr;
+  }
+  
+  .order-actions {
+    flex-direction: column;
+  }
+  
+  .order-actions button {
+    width: 100%;
+  }
+  
+  /* Cart improvements for mobile */
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+  
+  .cart-item img {
+    margin-bottom: 10px;
+  }
+  
+  .cart-item .details {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  .cart-item .price {
+    margin: 0 0 10px 0;
+  }
+  
+  .cart-item .quantity {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .cart-item button:last-child {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+/* ===== Custom Notification Styles ===== */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  min-width: 300px;
+  max-width: 400px;
+  transform: translateX(120%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.notification.show {
+  transform: translateX(0);
+}
+
+.notification-icon {
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+.notification-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  margin-left: 15px;
+}
+
+.notification.success {
+  background-color: #28a745;
+}
+
+.notification.error {
+  background-color: #dc3545;
+}
+
+.notification.info {
+  background-color: #17a2b8;
+}
+
+.notification.warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+/* Notification responsive adjustments */
+@media(max-width: 768px) {
+  .notification {
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Header -->
+<div class="mobile-header">
+  <img src="images/default profile image.jpg" alt="Profile" id="mobileProfileImg">
+  <h3 id="mobileWelcomeText">Welcome, User</h3>
+  <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰ Menu</button>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" class="active" data-section="info">Personal Info</a>
+    <a href="#" data-section="orders">Orders</a>
+    <a href="#" data-section="cart">My Cart</a>
+    <a href="#" data-section="favorites">Favorites</a>
+    <a href="javascript:void(0)" onclick="handleLogout()">Logout</a>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Sidebar for desktop -->
+  <div class="sidebar">
+    <img src="images/default profile image.jpg" alt="Profile" class="profile-img" id="sidebarProfileImg">
+    <h3 id="welcomeText">Welcome, User</h3>
+    <div class="menu">
+      <a href="#" class="active" data-section="info">Personal Info</a>
+      <a href="#" data-section="orders">Orders</a>
+      <a href="#" data-section="cart">My Cart</a>
+      <a href="#" data-section="favorites">Favorites</a>
+      <a href="javascript:void(0)" onclick="handleLogout()">Logout</a>
+    </div>
+    <button type="button" id="backBtn"> ← Back to Home</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <!-- Personal Info -->
+    <div id="info" class="section">
+      <h2>Personal Info</h2>
+      <div class="success-message" id="successMsg" style="display:none;">✅ Profile successfully updated!</div>
+
+      <!-- Profile Card -->
+      <div class="profile-card" id="profileCard">
+        <p><strong>Full Name:</strong> <span id="cardName">-</span></p>
+        <p><strong>Email:</strong> <span id="cardEmail">-</span></p>
+        <p><strong>Phone:</strong> <span id="cardPhone">-</span></p>
+        <p><strong>Address:</strong> <span id="cardAddress">-</span></p>
+        <button id="editBtn">Edit</button>
+      </div>
+
+      <!-- Profile Edit Form -->
+      <form id="profileForm" style="display:none;">
+        <label for="photo">Profile Photo</label>
+        <input type="file" id="photo" accept="image/*">
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" maxlength="30">
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" maxlength="30">
+
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" maxlength="10">
+
+        <label for="address">Delivery Address</label>
+        <textarea id="address" rows="3" maxlength="80"></textarea>
+
+        <button type="submit">Save Profile</button>
+       </form>
+     </div>
+
+      <!-- Orders -->
+      <div id="orders" class="section" style="display:none;">
+        <h2>My Orders</h2>
+        <div id="ordersContainer"></div>
+      </div> 
+         
+  <!-- 🛒 Add to Cart Section -->
+<div id="cart" class="section" style="display:none;">
+  <h2>🛒 My Cart</h2>
+
+  <!-- Left side: Cart items -->
+  <div id="cartItems"></div>
+
+  <!-- Right side: Summary -->
+  <div class="cart-summary">
+    <h3>Summary</h3>
+    <div class="row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
+    <div class="row"><span>Taxes</span><span id="taxes">₹0</span></div>
+    <div class="row"><span>Shipping</span><span id="shipping">₹0</span></div>
+    <div class="total">Grand Total: <span id="grandTotal">₹0</span></div>
+    <button id="proceedToCheckoutBtn">Proceed to Checkout</button>
+  </div>
+</div>
+
+    <!-- Favorites Section -->
+       
+     <div id="favorites" class="section" style="display:none;">
+       <h2>💖 My Favorites</h2>
+       <div id="wishlistContainer"></div>
+     </div>     
+  </div>
+</div>
+  
+<script> 
+  const DEFAULT_IMAGE = "default profile image.jpg";
+
+  const menuLinks = document.querySelectorAll(".menu a[data-section], .mobile-menu a[data-section]");
+  const sections = document.querySelectorAll(".section");
+
+  menuLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      menuLinks.forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+      sections.forEach(sec => sec.style.display = "none");
+      const sectionId = link.getAttribute("data-section");
+      document.getElementById(sectionId).style.display = "block";
+      
+      // Load section-specific content
+      if (sectionId === "orders") {
+        loadOrders();
+      } else if (sectionId === "cart") {
+        loadCart();
+      } else if (sectionId === "favorites") {
+        loadWishlist();
+      }
+    });
+  });
+
+  const profileForm = document.getElementById("profileForm");
+  const profileCard = document.getElementById("profileCard");
+  const editBtn = document.getElementById("editBtn");
+  const welcomeText = document.getElementById("welcomeText");
+  const mobileWelcomeText = document.getElementById("mobileWelcomeText");
+  const sidebarImg = document.getElementById("sidebarProfileImg");
+  const mobileImg = document.getElementById("mobileProfileImg");
+  const successMsg = document.getElementById("successMsg");
+
+  const cardName = document.getElementById("cardName");
+  const cardEmail = document.getElementById("cardEmail");
+  const cardPhone = document.getElementById("cardPhone");
+  const cardAddress = document.getElementById("cardAddress");
+
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const phoneInput = document.getElementById("phone");
+  const addressInput = document.getElementById("address");
+  const photoInput = document.getElementById("photo");
+
+  // Load logged-in user profile
+  let users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+  let loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  window.addEventListener("DOMContentLoaded", () => {
+    if (loggedUser) {
+      cardName.textContent = loggedUser.name;
+      cardEmail.textContent = loggedUser.email;
+      cardPhone.textContent = loggedUser.phone || "";
+      cardAddress.textContent = loggedUser.address || "";
+      sidebarImg.src = loggedUser.photo || DEFAULT_IMAGE;
+      mobileImg.src = loggedUser.photo || DEFAULT_IMAGE;
+      welcomeText.textContent = "Welcome, " + loggedUser.name;
+      mobileWelcomeText.textContent = "Welcome, " + loggedUser.name;
+
+      nameInput.value = loggedUser.name;
+      emailInput.value = loggedUser.email;
+      phoneInput.value = loggedUser.phone || "";
+      addressInput.value = loggedUser.address || "";
+    } else {
+      // If not logged in, redirect to login page
+      window.location.href = "pblogin.html";
+    }
+  });
+
+  // Edit button
+  editBtn.addEventListener("click", () => {
+    profileCard.style.display = "none";
+    profileForm.style.display = "block";
+  });
+
+  // Save Profile (update inside registeredUsers + loggedInUser)
+  profileForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (!loggedUser) return;
+
+    loggedUser.name = nameInput.value;
+    loggedUser.email = emailInput.value;
+    loggedUser.phone = phoneInput.value;
+    loggedUser.address = addressInput.value;
+
+    if (photoInput.files && photoInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        loggedUser.photo = e.target.result;
+        sidebarImg.src = e.target.result;
+        mobileImg.src = e.target.result;
+        saveUsers();
+      };
+      reader.readAsDataURL(photoInput.files[0]);
+    } else {
+      saveUsers();
+    }
+
+    cardName.textContent = loggedUser.name;
+    cardEmail.textContent = loggedUser.email;
+    cardPhone.textContent = loggedUser.phone;
+    cardAddress.textContent = loggedUser.address;
+    welcomeText.textContent = "Welcome, " + loggedUser.name;
+    mobileWelcomeText.textContent = "Welcome, " + loggedUser.name;
+
+    successMsg.style.display = "block";
+    setTimeout(() => (successMsg.style.display = "none"), 3000);
+
+    profileForm.style.display = "none";
+    profileCard.style.display = "block";
+  });
+
+  function saveUsers() {
+    const idx = users.findIndex(
+      u => u.email === loggedUser.email || u.username === loggedUser.username
+    );
+    if (idx !== -1) {
+      users[idx] = loggedUser;
+      localStorage.setItem("registeredUsers", JSON.stringify(users));
+    }
+    localStorage.setItem("loggedInUser", JSON.stringify(loggedUser));
+  }
+
+  function toggleMobileMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+  }
+
+  /*back button function */
+  const backBtn = document.getElementById("backBtn");
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      window.location.href = "pbhome.html";
+    });
+  }
+
+  // Logout function
+  function handleLogout() {
+    localStorage.removeItem('loggedInUser'); 
+    window.location.href = 'pblogin.html'; 
+  }
+</script>
+
+<script>
+/* =============================
+   🛒 UNIVERSAL CART SCRIPT
+   Works on: Home Page + Profile Page
+   ============================= */
+
+// Load existing cart
+let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+/* -----------------------------
+   1. Handle Add to Cart (Home)
+   ----------------------------- */
+document.querySelectorAll(".add-to-cart").forEach(btn => {
+  btn.addEventListener("click", function () {
+    const productDiv = this.closest(".category-item");
+    const product = {
+      name: productDiv.getAttribute("data-name"),
+      price: productDiv.getAttribute("data-price"),
+      image: productDiv.getAttribute("data-image"),
+      quantity: 1
+    };
+
+    cartItems.push(product);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    showNotification(`${product.name} added to cart!`, "success");
+    updateCartCount();
+  });
+});
+
+/* -----------------------------
+   2. Update Navbar Badge
+   ----------------------------- */
+function updateCartCount() {
+  const cartCount = document.getElementById("cartCount");
+  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  let count = cartItems.length;
+
+  if (!cartCount) return;
+
+  if (count === 0) {
+    cartCount.style.display = "none";
+  } else {
+    cartCount.style.display = "flex";
+    cartCount.textContent = count > 99 ? "99+" : count;
+  }
+}
+
+/* -----------------------------
+   3. Load Cart (Profile only)
+   ----------------------------- */
+function loadCart() {
+  const container = document.getElementById("cartItems");
+  if (!container) return; // not on profile page
+
+  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  container.innerHTML = "";
+
+  if (cartItems.length === 0) {
+    container.innerHTML = "<p>No items in cart.</p>";
+    updateSummary(0);
+    updateCartCount();
+    return;
+  }
+
+  let subtotal = 0;
+  cartItems.forEach((item, index) => {
+    if (!item.quantity) item.quantity = 1;
+
+    let itemTotal = parseFloat(item.price) * item.quantity;
+    subtotal += itemTotal;
+
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" width="50" height="50">
+      <div class="details">${item.name}</div>
+      <div class="price">₹${item.price}</div>
+      <div class="quantity">
+        <button onclick="changeQuantity(${index}, -1)">-</button>
+        <span>${item.quantity}</span>
+        <button onclick="changeQuantity(${index}, 1)">+</button>
+      </div>
+      <button onclick="removeItem(${index})">❌ Remove</button>
+    `;
+    container.appendChild(div);
+  });
+
+  updateSummary(subtotal);
+  updateCartCount();
+}
+
+/* -----------------------------
+   4. Update Summary (Profile)
+   ----------------------------- */
+function updateSummary(subtotal) {
+  let taxes = Math.round(subtotal * 0.05);
+  let shipping = subtotal > 0 ? 80 : 0;
+  let grandTotal = subtotal + taxes + shipping;
+
+  if (document.getElementById("subtotal"))
+    document.getElementById("subtotal").textContent = "₹" + subtotal;
+  if (document.getElementById("taxes"))
+    document.getElementById("taxes").textContent = "₹" + taxes;
+  if (document.getElementById("shipping"))
+    document.getElementById("shipping").textContent = "₹" + shipping;
+  if (document.getElementById("grandTotal"))
+    document.getElementById("grandTotal").textContent = "₹" + grandTotal;
+}
+
+/* -----------------------------
+   5. Quantity + Remove
+   ----------------------------- */
+function changeQuantity(index, change) {
+  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  if (!cartItems[index].quantity) cartItems[index].quantity = 1;
+
+  cartItems[index].quantity += change;
+  if (cartItems[index].quantity < 1) cartItems[index].quantity = 1;
+
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  loadCart();
+  updateCartCount();
+}
+
+function removeItem(index) {
+  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const removedItem = cartItems[index];
+  cartItems.splice(index, 1);
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  loadCart();
+  updateCartCount();
+  showNotification(`${removedItem.name} removed from cart`, "info");
+}
+
+/* -----------------------------
+   6. Navbar Cart Button
+   ----------------------------- */
+const cartLink = document.querySelector(".cart-link");
+if (cartLink) {
+  cartLink.addEventListener("click", function (e) {
+    // If on profile page → open section
+    if (window.location.pathname.includes("profile.html")) {
+      e.preventDefault();
+      document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+      const cartSection = document.getElementById("cart");
+      if (cartSection) {
+        cartSection.style.display = "block";
+        loadCart();
+      }
+    }
+    // If on home page → let default href redirect (profile.html#cart)
+  });
+}
+
+/* -----------------------------
+   7. Proceed to Checkout Button
+   ----------------------------- */
+const proceedToCheckoutBtn = document.getElementById("proceedToCheckoutBtn");
+if (proceedToCheckoutBtn) {
+  proceedToCheckoutBtn.addEventListener("click", function() {
+    // Check if cart is empty
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    if (cartItems.length === 0) {
+      showNotification("Your cart is empty. Add items before checkout.", "warning");
+      return;
+    }
+    
+    // Save cart items to localStorage for billing page
+    localStorage.setItem("checkoutItems", JSON.stringify(cartItems));
+    
+    // Redirect to billing page
+    window.location.href = "billing.html";
+  });
+}
+
+/* -----------------------------
+   8. On Page Load
+   ----------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount();
+
+  // If profile.html#cart → show cart immediately
+  if (window.location.hash === "#cart" && window.location.pathname.includes("profile.html")) {
+    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+    document.getElementById("cart").style.display = "block";
+    loadCart();
+  }
+});
+
+/* -----------------------------
+   9. Load Orders
+   ----------------------------- */
+function loadOrders() {
+  const ordersContainer = document.getElementById("ordersContainer");
+  if (!ordersContainer) return;
+  
+  // Get orders from localStorage
+  let orders = JSON.parse(localStorage.getItem("userOrders")) || [];
+  
+  // Sort orders by date (newest first)
+  orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+  
+  if (orders.length === 0) {
+    ordersContainer.innerHTML = `
+      <div class="empty-orders">
+        <i class="fas fa-shopping-bag"></i>
+        <p>You haven't placed any orders yet.</p>
+      </div>
+    `;
+    return;
+  }
+  
+  ordersContainer.innerHTML = "";
+  
+  orders.forEach((order, index) => {
+    const orderDate = new Date(order.date);
+    const formattedDate = orderDate.toLocaleDateString() + ' ' + orderDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    
+    // Create status badge with appropriate color
+    let statusClass = "";
+    let statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+    
+    switch(order.status) {
+      case "pending":
+        statusClass = "status-pending";
+        break;
+      case "processing":
+        statusClass = "status-processing";
+        break;
+      case "shipped":
+        statusClass = "status-shipped";
+        break;
+      case "delivered":
+        statusClass = "status-delivered";
+        break;
+      case "cancelled":
+        statusClass = "status-cancelled";
+        break;
+      default:
+        statusClass = "status-pending";
+    }
+    
+    const orderDiv = document.createElement("div");
+    orderDiv.classList.add("order-item");
+    
+    let productsHtml = "";
+    order.products.forEach(product => {
+      productsHtml += `
+        <div class="order-product">
+          <img src="${product.image}" alt="${product.name}">
+          <div class="order-product-details">
+            <div class="order-product-name">${product.name}</div>
+            <div class="order-product-price">₹${product.price} × ${product.quantity}</div>
+          </div>
+        </div>
+      `;
+    });
+    
+    // Only show cancel button for orders that are not delivered or cancelled
+    const showCancelButton = order.status !== "delivered" && order.status !== "cancelled";
+    
+    orderDiv.innerHTML = `
+      <div class="order-header">
+        <div class="order-id">Order #${order.id}</div>
+        <div class="order-date">${formattedDate}</div>
+        <div class="order-status ${statusClass}">${statusText}</div>
+      </div>
+      <div class="order-products">
+        ${productsHtml}
+      </div>
+      <div class="order-total">
+        <span>Total:</span>
+        <span>₹${order.total.toFixed(2)}</span>
+      </div>
+      <div class="order-actions">
+        <button class="btn-reorder" onclick="reorderOrder(${index})">Reorder</button>
+        <button class="btn-view-details" onclick="viewOrderDetails(${index})">View Details</button>
+        ${showCancelButton ? `<button class="btn-cancel-order" onclick="cancelOrder(${index})">Cancel Order</button>` : ''}
+        <button class="btn-track-order" onclick="trackOrder(${index})">Track Order</button>
+      </div>
+    `;
+    
+    ordersContainer.appendChild(orderDiv);
+  });
+  
+  console.log(`Loaded ${orders.length} orders`);
+}
+
+/* -----------------------------
+   10. Reorder Order
+   ----------------------------- */
+function reorderOrder(index) {
+  let orders = JSON.parse(localStorage.getItem("userOrders")) || [];
+  if (index >= orders.length) return;
+  
+  const order = orders[index];
+  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  
+  // Add all products from the order to the cart
+  order.products.forEach(product => {
+    cartItems.push({
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: product.quantity
+    });
+  });
+  
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  updateCartCount();
+  
+  // Switch to cart section
+  document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+  document.getElementById("cart").style.display = "block";
+  loadCart();
+  
+  showNotification("All items from this order have been added to your cart.", "success");
+}
+
+/* -----------------------------
+   11. View Order Details
+   ----------------------------- */
+function viewOrderDetails(index) {
+  let orders = JSON.parse(localStorage.getItem("userOrders")) || [];
+  if (index >= orders.length) return;
+  
+  const order = orders[index];
+  const orderDate = new Date(order.date);
+  const formattedDate = orderDate.toLocaleDateString() + ' ' + orderDate.toLocaleTimeString();
+  
+  // Create a modal to show order details
+  const modal = document.createElement("div");
+  modal.style.position = "fixed";
+  modal.style.top = "0";
+  modal.style.left = "0";
+  modal.style.width = "100%";
+  modal.style.height = "100%";
+  modal.style.backgroundColor = "rgba(0,0,0,0.5)";
+  modal.style.display = "flex";
+  modal.style.justifyContent = "center";
+  modal.style.alignItems = "center";
+  modal.style.zIndex = "1000";
+  
+  let productsHtml = "";
+  order.products.forEach(product => {
+    productsHtml += `
+      <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
+        <div>
+          <div style="font-weight: 500;">${product.name}</div>
+          <div style="color: #65040d;">₹${product.price} × ${product.quantity}</div>
+        </div>
+      </div>
+    `;
+  });
+  
+  let statusClass = "";
+  switch(order.status) {
+    case "pending":
+      statusClass = "status-pending";
+      break;
+    case "processing":
+      statusClass = "status-processing";
+      break;
+    case "shipped":
+      statusClass = "status-shipped";
+      break;
+    case "delivered":
+      statusClass = "status-delivered";
+      break;
+    case "cancelled":
+      statusClass = "status-cancelled";
+      break;
+    default:
+      statusClass = "status-pending";
+  }
+  
+  modal.innerHTML = `
+    <div style="background: white; padding: 20px; border-radius: 10px; max-width: 500px; width: 90%;">
+      <h3 style="margin-top: 0; color: #65040d;">Order #${order.id}</h3>
+      <p><strong>Date:</strong> ${formattedDate}</p>
+      <p><strong>Status:</strong> <span class="order-status ${statusClass}" style="padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></p>
+      <p><strong>Payment Method:</strong> ${order.paymentMethod.charAt(0).toUpperCase() + order.paymentMethod.slice(1)}</p>
+      <p><strong>Shipping Address:</strong></p>
+      <p>${order.shippingAddress.fullName}<br>
+      ${order.shippingAddress.addressLine1}<br>
+      ${order.shippingAddress.addressLine2 ? order.shippingAddress.addressLine2 + '<br>' : ''}
+      ${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.zipCode}<br>
+      ${order.shippingAddress.country}<br>
+      ${order.shippingAddress.phone}</p>
+      <p><strong>Products:</strong></p>
+      ${productsHtml}
+      <div style="display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; font-weight: bold;">
+        <span>Total:</span>
+        <span>₹${order.total.toFixed(2)}</span>
+      </div>
+      <button onclick="this.parentElement.remove()" style="margin-top: 20px; width: 100%; padding: 10px; background: #65040d; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Close modal when clicking outside
+  modal.addEventListener("click", function(e) {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
+}
+
+/* -----------------------------
+   12. Cancel Order
+   ----------------------------- */
+function cancelOrder(index) {
+  let orders = JSON.parse(localStorage.getItem("userOrders")) || [];
+  if (index >= orders.length) return;
+  
+  // Create confirmation modal instead of using browser alert
+  const modal = document.createElement("div");
+  modal.style.position = "fixed";
+  modal.style.top = "0";
+  modal.style.left = "0";
+  modal.style.width = "100%";
+  modal.style.height = "100%";
+  modal.style.backgroundColor = "rgba(0,0,0,0.5)";
+  modal.style.display = "flex";
+  modal.style.justifyContent = "center";
+  modal.style.alignItems = "center";
+  modal.style.zIndex = "1000";
+  
+  modal.innerHTML = `
+    <div style="background: white; padding: 20px; border-radius: 10px; max-width: 400px; width: 90%;">
+      <h3 style="margin-top: 0; color: #65040d; text-align: center;">Confirm Cancellation</h3>
+      <p style="text-align: center; margin-bottom: 20px;">Are you sure you want to cancel this order? This action cannot be undone.</p>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="confirmCancelOrder(${index}); this.closest('.modal').remove();" style="flex: 1; padding: 10px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">Yes, Cancel</button>
+        <button onclick="this.closest('.modal').remove();" style="flex: 1; padding: 10px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">No, Keep Order</button>
+      </div>
+    </div>
+  `;
+  
+  modal.classList.add("modal");
+  document.body.appendChild(modal);
+  
+  // Close modal when clicking outside
+  modal.addEventListener("click", function(e) {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
+}
+
+function confirmCancelOrder(index) {
+  let orders = JSON.parse(localStorage.getItem("userOrders")) || [];
+  if (index >= orders.length) return;
+  
+  // Update order status to cancelled
+  orders[index].status = "cancelled";
+  localStorage.setItem("userOrders", JSON.stringify(orders));
+  
+  // Reload orders
+  loadOrders();
+  
+  showNotification("Order has been cancelled successfully.", "info");
+}
+
+/* -----------------------------
+   13. Track Order
+   ----------------------------- */
+function trackOrder(index) {
+  let orders = JSON.parse(localStorage.getItem("userOrders")) || [];
+  if (index >= orders.length) return;
+  
+  const order = orders[index];
+  
+  // Create a modal to show order tracking
+  const modal = document.createElement("div");
+  modal.style.position = "fixed";
+  modal.style.top = "0";
+  modal.style.left = "0";
+  modal.style.width = "100%";
+  modal.style.height = "100%";
+  modal.style.backgroundColor = "rgba(0,0,0,0.5)";
+  modal.style.display = "flex";
+  modal.style.justifyContent = "center";
+  modal.style.alignItems = "center";
+  modal.style.zIndex = "1000";
+  
+  // Generate tracking stages based on order status
+  let trackingStages = [];
+  const orderDate = new Date(order.date);
+  
+  // Always include order confirmed
+  trackingStages.push({
+    name: "Order Confirmed",
+    date: orderDate.toLocaleDateString() + ', ' + orderDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+    status: "completed",
+    description: "Your order has been received and is being processed."
+  });
+  
+  // Add stages based on order status
+  if (order.status === "processing" || order.status === "shipped" || order.status === "delivered") {
+    const processingDate = new Date(orderDate);
+    processingDate.setDate(processingDate.getDate() + 1);
+    
+    trackingStages.push({
+      name: "Seller Processing",
+      date: processingDate.toLocaleDateString() + ', ' + processingDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+      status: order.status === "processing" ? "current" : "completed",
+      description: "The seller is preparing your items for shipment."
+    });
+  }
+  
+  if (order.status === "shipped" || order.status === "delivered") {
+    const shippedDate = new Date(orderDate);
+    shippedDate.setDate(shippedDate.getDate() + 2);
+    
+    trackingStages.push({
+      name: "In Transit",
+      date: shippedDate.toLocaleDateString() + ', ' + shippedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+      status: order.status === "shipped" ? "current" : "completed",
+      description: "Your order is on the way with our delivery partner.",
+      trackingNumber: "EKART" + Math.floor(Math.random() * 10000000000)
+    });
+  }
+  
+  if (order.status === "delivered") {
+    const deliveredDate = new Date(orderDate);
+    deliveredDate.setDate(deliveredDate.getDate() + 3);
+    
+    trackingStages.push({
+      name: "Delivered",
+      date: deliveredDate.toLocaleDateString() + ', ' + deliveredDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+      status: "completed",
+      description: "Your order has been delivered successfully."
+    });
+  }
+  
+  // Generate tracking HTML
+  let trackingHtml = "";
+  trackingStages.forEach((stage, index) => {
+    const isLast = index === trackingStages.length - 1;
+    const statusClass = stage.status === "completed" ? "completed" : (stage.status === "current" ? "current" : "pending");
+    
+    trackingHtml += `
+      <div class="tracking-stage ${statusClass}">
+        <div class="tracking-icon">
+          ${stage.status === "completed" ? '<i class="fas fa-check-circle"></i>' : (stage.status === "current" ? '<i class="fas fa-clock"></i>' : '<i class="far fa-circle"></i>')}
+        </div>
+        <div class="tracking-details">
+          <div class="tracking-name">${stage.name}</div>
+          <div class="tracking-date">${stage.date}</div>
+        </div>
+        ${!isLast ? '<div class="tracking-line"></div>' : ''}
+      </div>
+    `;
+  });
+  
+  // Get current stage info
+  const currentStage = trackingStages.find(stage => stage.status === "current") || trackingStages[trackingStages.length - 1];
+  
+  modal.innerHTML = `
+    <div style="background: white; padding: 20px; border-radius: 10px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+      <h3 style="margin-top: 0; color: #65040d; text-align: center;">Order Tracking</h3>
+      <p style="text-align: center; margin-bottom: 20px;">Order #${order.id}</p>
+      
+      <div class="tracking-container">
+        ${trackingHtml}
+      </div>
+      
+      <div class="tracking-info">
+        <h4>Current Status: ${currentStage.name}</h4>
+        <p>${currentStage.description}</p>
+        ${currentStage.trackingNumber ? `<p><strong>Tracking Number:</strong> ${currentStage.trackingNumber}</p>` : ''}
+        <p><strong>Estimated Delivery:</strong> ${new Date(orderDate.getTime() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString()}</p>
+      </div>
+      
+      <div style="margin-top: 20px; text-align: center; color: #777; font-size: 14px;">
+        Calls and notifications will vibrate
+      </div>
+      
+      <button onclick="this.parentElement.remove()" style="margin-top: 20px; width: 100%; padding: 10px; background: #65040d; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Close modal when clicking outside
+  modal.addEventListener("click", function(e) {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
+}
+
+/* -----------------------------
+   14. Show Custom Notification
+   ----------------------------- */
+function showNotification(message, type = "info") {
+  // Create notification element
+  const notification = document.createElement("div");
+  notification.className = `notification ${type}`;
+  
+  // Add icon based on type
+  let icon = "";
+  if (type === "success") {
+    icon = '<i class="fas fa-check-circle notification-icon"></i>';
+  } else if (type === "error") {
+    icon = '<i class="fas fa-exclamation-circle notification-icon"></i>';
+  } else if (type === "warning") {
+    icon = '<i class="fas fa-exclamation-triangle notification-icon"></i>';
+  } else {
+    icon = '<i class="fas fa-info-circle notification-icon"></i>';
+  }
+  
+  // Add close button
+  const closeButton = '<button class="notification-close">&times;</button>';
+  
+  // Set notification content
+  notification.innerHTML = `${icon}${message}${closeButton}`;
+  
+  // Add to DOM
+  document.body.appendChild(notification);
+  
+  // Show notification with animation
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 10);
+  
+  // Add event listener to close button
+  notification.querySelector(".notification-close").addEventListener("click", function() {
+    notification.classList.remove("show");
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  });
+  
+  // Auto-hide after 5 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 5000);
+}
+</script>
+
+<!-- ✅ wishlist product  Script -->
+<script>
+function loadWishlist() {
+  const container = document.getElementById("wishlistContainer");
+  let wishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+  container.innerHTML = "";
+
+  if (wishlistItems.length === 0) {
+    container.innerHTML = "<p>No items in favorites.</p>";
+  } else {
+    wishlistItems.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.classList.add("wishlist-item");
+      div.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" width="50" height="50">
+        <span>${item.name} - ₹${item.price}</span>
+        <button onclick="removeWishlist(${index})">❌ Remove</button>
+      `;
+      container.appendChild(div);
+    });
+  }
+}
+
+// ❌ Remove item from wishlist
+function removeWishlist(index) {
+  let wishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+  const removedItem = wishlistItems[index];
+  wishlistItems.splice(index, 1);
+  localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
+  loadWishlist();
+  showNotification(`${removedItem.name} removed from favorites`, "info");
+}
+
+// 📌 Load favorites when section is opened
+document.querySelector('[data-section="favorites"]').addEventListener("click", loadWishlist);
+
+// 📌 Also load once on page load
+document.addEventListener("DOMContentLoaded", loadWishlist);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forgot Password - Pooja Bazaar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      box-shadow: 0 6px 6px rgba(0,0,0,0.20);
+      background: #460c0c;
+    display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    body::before{
+       content: "";
+       background: url('pblogo.png') no-repeat center;
+      background-size: 80%;
+      opacity: 0.07;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    
+      
+}
+    .forgot-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 90%;
+      max-width: 400px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    .forgot-box h2 {
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+      position: relative;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #f0c26e;
+      border-radius: 10px;
+      font-size: 14px;
+       background: transparent;
+    }
+
+    .white-input {
+    background-color: #555; 
+    color: white; 
+    border: 1px solid #777;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  ::placeholder { 
+    color: #ccc;
+    opacity: 1; 
+  }
+
+    .char-count {
+      font-size: 12px;
+      color: #f0f0f0;
+      text-align: right;
+      margin-top: 5px;
+    }
+    .suggestions {
+      position: absolute;
+      background: white;
+      color: black;
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+      max-height: 120px;
+      overflow-y: auto;
+      z-index: 2;
+    }
+    .suggestions div {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .suggestions div:hover {
+      background-color: #ddd;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background-color: #f0c26e;
+      color: #004281;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .submit-btn:hover {
+      border: 1px solid #fff;
+      background-color: #460c0c;
+      color: #fff;
+    }
+    .link {
+      display: block;
+      margin-top: 20px;
+      color: #ffffff;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="forgot-box">
+    <h2>Forgot Password</h2>
+    <p>Enter your registered email to reset your password.</p>
+
+    <div class="input-group">
+      <label for="forgot-email">Email</label>
+      <input type="email" id="forgot-email" class="white-input"
+placeholder="example@domain.com" autocomplete="email" maxlength="50">
+      <div class="char-count" id="char-count">0 / 50</div>
+      <div class="suggestions" id="email-suggestions"></div>
+    </div>
+
+    <button class="submit-btn" onclick="submitForgot()">Send Reset Link</button>
+    <a class="link" href="pblogin.html">Back to Login</a>
+  </div>
+
+  <script>
+    const emailInput = document.getElementById("forgot-email");
+    const suggestionsBox = document.getElementById("email-suggestions");
+    const charCount = document.getElementById("char-count");
+
+    // Load emails from localStorage
+    const storedEmails = JSON.parse(localStorage.getItem("savedEmails")) || [];
+
+    // Show suggestions + update char count
+    emailInput.addEventListener("input", () => {
+      const query = emailInput.value.toLowerCase();
+      charCount.textContent = `${query.length} / 50`;
+      suggestionsBox.innerHTML = "";
+
+      if (!query) return;
+
+      const filtered = storedEmails.filter(email => email.toLowerCase().includes(query));
+
+      filtered.forEach(email => {
+        const div = document.createElement("div");
+        div.textContent = email;
+        div.onclick = () => {
+          emailInput.value = email;
+          charCount.textContent = `${email.length} / 50`;
+          suggestionsBox.innerHTML = "";
+        };
+        suggestionsBox.appendChild(div);
+      });
+    });
+
+    // Submit function
+    function submitForgot() {
+      const email = emailInput.value.trim();
+      if (email === "") {
+        alert("Please enter your email.");
+        return;
+      }
+
+      if (!storedEmails.includes(email)) {
+        storedEmails.unshift(email);
+        if (storedEmails.length > 5) storedEmails.pop();
+        localStorage.setItem("savedEmails", JSON.stringify(storedEmails));
+      }
+
+      alert("Reset link sent to " + email + " ✅");
+    }
+  </script>
+
+
+</body></html>
